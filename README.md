@@ -1,8 +1,7 @@
-# Phase 3: Bringing in React
+# Phase 4: Dual Routing??
 
-The third phase introduces react into the project. We will create our first components and replace our Angular templates for routing. For now, we will replace our views and directives while keeping app logic in the Angular controllers.
+At this point, all of our templates, controllers and directives have been converted to React components and our services are just pure js files. But how should we handle routing while we are rewriting all of our code? This phase demonstrates how to have Angular's and React's routers working together in harmony.
 
-* react2angular - Converts React components to Angular components
-* Better Imports - How to handle AngularJS dependency injection
-* Convert view to React
-* Convert directives to React
+* Setup react-router
+* Handle routing to Angular or React based on route
+* Handle different url params structure in components

@@ -1,21 +1,13 @@
 angular.module('todomvc', ['ngRoute', 'ngResource'])
-	.config(function ($routeProvider, $locationProvider) {
+    .config(function ($routeProvider, $locationProvider) {
 
-		const routeConfig = {
-			controller: 'TodoCtrl as $ctrl',
-			templateUrl: '../views/todomvc-index.html'
-		};
-
-		$routeProvider
-			.when('/', routeConfig)
-			.when('/:status', routeConfig)
-			.otherwise({
-				redirectTo: '/'
-			});
+        $routeProvider
+            .when('/', { template: '<todo-component></todo-component>'})
+            .when('/:status', { template: '<react-router></react-router>' });
 
         $locationProvider.html5Mode(true);
 
-	});
-
-require('controllers');
+    });
+// use require for anything that depends on the angular module being created
+// require is synchronous and imports are async
 require('components');
