@@ -1,13 +1,16 @@
-angular.module('todomvc', ['ngRoute', 'ngResource'])
-    .config(function ($routeProvider, $locationProvider) {
+import { ReactDOM, React } from 'vendors';
 
-        $routeProvider
-            .when('/', { template: '<todo-component></todo-component>'})
-            .when('/:status', { template: '<react-router></react-router>' });
+import TodoComponent from 'components/TodoComponent';
 
-        $locationProvider.html5Mode(true);
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-    });
-// use require for anything that depends on the angular module being created
-// require is synchronous and imports are async
-require('components');
+const ReactRouter =  (
+	<Router>
+		<div>
+			<Route exact path="/" component={TodoComponent} />
+			<Route path="/:status" component={TodoComponent} />
+		</div>
+	</Router>
+);
+
+ReactDOM.render(ReactRouter, document.querySelector('#root'));

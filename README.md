@@ -1,7 +1,9 @@
-# Phase 4: Dual Routing??
+# Phase 4.5: Removing Angular
 
-At this point, all of our templates, controllers and directives have been converted to React components and our services are just pure js files. But how should we handle routing while we are rewriting all of our code? This phase demonstrates how to have Angular's and React's routers working together in harmony.
+At this point, all code should be in either React components or pure js service files and all routes should be using react-router. We can now officially remove Angular's routing and any remaining code from our project!
 
-* Setup react-router
-* Handle routing to Angular or React based on route
-* Handle different url params structure in components
+* Rewrite/replace last Angular dependencies ($filter, $routeParams)
+* Update index.html - Remove ng-app and ng-view and add React root element
+* Replace Angular routing with react-router and add ReactDOM.render
+* Prune webpack config
+* Prune packages

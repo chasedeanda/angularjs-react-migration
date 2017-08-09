@@ -1,5 +1,4 @@
 import { PropTypes, Component, axios, autoBind } from 'vendors';
-import { $routeParams } from 'core';
 
 import todoStorage from '../services/todoStorage';
 
@@ -9,10 +8,6 @@ export default class TodoComponent extends Component {
     constructor(props){
         super(props);
         autoBind(this);
-
-        // Components needs to handle getting params from ngRoute and react-router
-        const params = _.get(props.match, 'params') || $routeParams.params || {};
-
         this.state = {
             newTodo: '',
             todos: [],
@@ -21,26 +16,22 @@ export default class TodoComponent extends Component {
             remainingCount: null,
             completedCount: null,
             allChecked: false,
-            statusFilter: params.status ? { completed: params.status === 'completed' } : {},
-            status: params.status || '',
+            statusFilter: props.match.params.status ? { completed: props.match.params.status === 'completed' } : {},
+            status: props.match.params.status || '',
             saving: false,
             saveEvent: null,
             reverted: null
         };
     }
     componentDidMount(){
-        this.fetchTodos();
+       this.fetchTodos();
     }
-    componentWillReceiveProps(nextProps) {
-        // Handle React Router params
-        const params = nextProps.match.params;
-        if (params) {
-            this.setState({
-                statusFilter: nextProps.match.params.status ? {completed: nextProps.match.params.status === 'completed'} : {},
-                status: nextProps.match.params.status || '',
-            });
-            this.fetchTodos();
-        }
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            statusFilter: nextProps.match.params.status ? { completed: nextProps.match.params.status === 'completed' } : {},
+            status: nextProps.match.params.status || '',
+        });
+        this.fetchTodos();
     }
     fetchTodos(){
         // Fetch todos
