@@ -1,8 +1,8 @@
-# Phase 2: ES6 Refactor
+# Phase 3: Bringing in React
 
-Now that we have Webpack bundling the app with babel, we can use ES6! The next step is to convert controllers to es6 classes and rewrite all Angular services in pure js. This makes the final transition much smoother because we can copy/paste our controllers into React container components.
+The third phase introduces react into the project. We will create our first components and replace our Angular templates for routing. For now, we will replace our views and directives while keeping app logic in the Angular controllers.
 
-* ES6 classes
-* Fat arrows - Handling scope in controllers
-* Controller as $ctrl
-* Rewrite services as pure JS
+* react2angular - Converts React components to Angular components
+* Better Imports - How to handle AngularJS dependency injection
+* Convert view to React
+* Convert directives to React

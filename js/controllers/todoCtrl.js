@@ -1,7 +1,9 @@
 const todoStorage = require('services/todoStorage');
 
+import { $routeParams, $filter } from 'core';
+
 class TodoCtrl {
-	constructor($scope, $routeParams, $filter){
+	constructor($scope){
 
 		// Assign all $scope variables to this
 		this.todos = $scope.todos = todoStorage.todos;
@@ -22,7 +24,7 @@ class TodoCtrl {
 
 		// Bind all class functions to this
 		this.addTodo = this.addTodo.bind(this);
-		this.editedTodo = this.editTodo.bind(this);
+		this.editTodo = this.editTodo.bind(this);
 		this.saveEdits = this.saveEdits.bind(this);
 		this.revertEdits = this.revertEdits.bind(this);
 		this.removeTodo = this.removeTodo.bind(this);
@@ -44,16 +46,14 @@ class TodoCtrl {
         // Monitor the current route for changes and adjust the filter accordingly.
         $scope.$on('$routeChangeSuccess', () => {
             const status = this.status = $routeParams.status || '';
-            this.statusFilter = (status === 'active') ?
-                { completed: false } : (status === 'completed') ?
-                    { completed: true } : {};
+            this.statusFilter = status ? { completed: status === 'completed' } : {};
         });
 
 	}
 
-	addTodo () {
+	addTodo (val) {
 		const newTodo = {
-			title: this.newTodo.trim(),
+			title: val.trim(),
 			completed: false
 		};
 
@@ -72,6 +72,7 @@ class TodoCtrl {
 		this.editedTodo = todo;
 		// Clone the original todo to restore it on demand.
         this.originalTodo = angular.extend({}, todo);
+        this.scope.$apply();
 	}
 
 	saveEdits(todo, event) {
@@ -98,12 +99,10 @@ class TodoCtrl {
 		}
 
         todoStorage[todo.title ? 'put' : 'delete'](todo)
-			.then(() => {}, () => {
-				todo.title = this.originalTodo.title;
-			})
 			.then(() => {
                 this.editedTodo = null;
-			});
+                this.scope.$apply()
+			}, () => todo.title = this.originalTodo.title)
 	}
 
 	revertEdits(todo) {
@@ -111,14 +110,17 @@ class TodoCtrl {
         this.editedTodo = null;
         this.originalTodo = null;
         this.reverted = true;
+        this.scope.$apply();
 	}
 
 	removeTodo(todo) {
 		todoStorage.delete(todo);
+        this.scope.$apply();
 	}
 
 	saveTodo(todo) {
 		todoStorage.put(todo);
+        this.scope.$apply();
 	}
 
 	toggleCompleted(todo, completed) {
@@ -126,13 +128,13 @@ class TodoCtrl {
 			todo.completed = completed;
 		}
 		todoStorage.put(todo, this.todos.indexOf(todo))
-			.then(() => {}, () => {
-				todo.completed = !todo.completed;
-			});
+			.then(() => {}, () => todo.completed = !todo.completed)
+			.then(() => this.scope.$apply());
 	}
 
 	clearCompletedTodos() {
 		todoStorage.clearCompleted();
+        this.scope.$apply();
 	}
 
 	markAll(completed) {
@@ -141,6 +143,7 @@ class TodoCtrl {
 				this.toggleCompleted(todo, completed);
 			}
 		});
+        this.scope.$apply();
 	}
 }
 
