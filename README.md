@@ -1,8 +1,7 @@
-# Phase 3: Bringing in React
+# Phase 3.5: Bringing in (More) React
 
-The third phase introduces react into the project. We will create our first components and replace our Angular templates for routing. For now, we will replace our views and directives while keeping app logic in the Angular controllers.
+I called this phase 3.5 because it's a continuation of what we did in phase 3. Now that our views and directives are React components, let's convert our Angular controllers to React container components.
 
-* react2angular - Converts React components to Angular components
 * Better Imports - How to handle AngularJS dependency injection
-* Convert view to React
-* Convert directives to React
+* Convert controllers to React container components
+* Replace route templates with new container components
