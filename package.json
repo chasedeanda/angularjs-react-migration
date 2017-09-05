@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "webpack-dev-server --config ./js/config/dev.config.js --hot --inline",
+    "start": "yarn; webpack-dev-server --config ./js/config/dev.config.js --hot --inline",
     "build": "webpack --config ./js/config/prod.config.js",
     "test": "karma start test/config/karma.conf.js"
   },
